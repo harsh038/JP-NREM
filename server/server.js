@@ -4,18 +4,15 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import connectDB from "./config/db.js";
+import Users from "./models/User.js";
 
-// Inintialize Express
 const app = express();
 
-// connect to db
 await connectDB();
 
-// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// Routes
 app.get("/", (req, res) => {
   res.send("API Working");
 });
@@ -23,7 +20,18 @@ app.get("/", (req, res) => {
 //   throw new Error("My first Sentry error!");
 // });
 
-// port
+app.post("/", async (req, res) => {
+  try {
+    const payload = req.body;
+    const user = new Users(payload);
+    const savedUser = await user.save();
+
+    res.status(200).json({ status: "success", data: savedUser });
+  } catch (error) {
+    res.status(500).json({ status: "error", message: error.message });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 Sentry.setupExpressErrorHandler(app);
 
