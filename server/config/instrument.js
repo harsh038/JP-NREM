@@ -1,29 +1,7 @@
-// IMPORTANT: Make sure to import `instrument.js` at the top of your file.
-// If you're using ECMAScript Modules (ESM) syntax, use `import "./instrument.js";`
-// require("./instrument.js");
-import "./instrument.js";
-// All other imports below
 // Import with `import * as Sentry from "@sentry/node"` if you are using ESM
 import * as Sentry from "@sentry/node";
-import express from "express";
 
-const app = express();
-
-// All your controllers should live here
-
-app.get("/", function rootHandler(req, res) {
-  res.end("Hello world!");
+Sentry.init({
+  dsn: "https://0f54ac07f8540567e02f9bbf66d0deb7@o4509200627859456.ingest.us.sentry.io/4509200632184836",
+  integrations: [Sentry.mongooseIntegration()],
 });
-
-// The error handler must be registered before any other error middleware and after all controllers
-Sentry.setupExpressErrorHandler(app);
-
-// Optional fallthrough error handler
-app.use(function onError(err, req, res, next) {
-  // The error id is attached to `res.sentry` to be returned
-  // and optionally displayed to the user for support.
-  res.statusCode = 500;
-  res.end(res.sentry + "\n");
-});
-
-app.listen(3000);
