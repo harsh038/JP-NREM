@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 // app.get("/debug-sentry", function mainHandler(req, res) {
 //   throw new Error("My first Sentry error!");
 // });
-app.post('/webhooks',clerkWenhooks)
+app.post("/webhooks", clerkWenhooks);
 
 // port
 const PORT = process.env.PORT || 5000;
