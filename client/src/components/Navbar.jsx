@@ -9,36 +9,33 @@ function Navbar() {
   const navigate = useNavigate();
   const { setShowRecruiterLogin } = useContext(AppContext);
   const [loggedInUser, setLoggedInUser] = useState("");
-  const [showDropdown, setShowDropdown] = useState(false); // Manage dropdown visibility
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    // Get the logged-in user from localStorage
     const user = localStorage.getItem("loggedInUser");
     setLoggedInUser(user);
   }, []);
 
   const handleLogout = () => {
-    // Clear user and token data from localStorage
     localStorage.removeItem("token");
     localStorage.removeItem("loggedInUser");
     handleSucess("User logged out");
     setTimeout(() => {
-      navigate("/login"); // Redirect to login after 1 second
+      navigate("/login");
     }, 1000);
   };
 
   const handleProfileClick = () => {
-    setShowDropdown(!showDropdown); // Toggle dropdown visibility
+    setShowDropdown(!showDropdown);
   };
 
   const handleUpdateProfile = () => {
-    navigate("/update-profile"); // Navigate to update profile page
+    navigate("/update-profile");
   };
 
   return (
     <div className="shadow py-4 bg-white">
       <div className="container px-4 mx-auto flex items-center justify-between">
-        {/* Logo on left */}
         <div>
           <img
             onClick={() => navigate("/")}
@@ -48,7 +45,6 @@ function Navbar() {
           />
         </div>
 
-        {/* Navbar Links & Profile Section */}
         <div className="flex items-center gap-6 ml-auto">
           {loggedInUser ? (
             <>
@@ -58,7 +54,9 @@ function Navbar() {
               >
                 Applied Jobs
               </Link>
-              <span className="ml-4 text-gray-700">Welcome back, {loggedInUser}!</span>
+              <span className="ml-4 text-gray-700">
+                Welcome back, {loggedInUser}!
+              </span>
 
               <div className="relative group ml-6">
                 <div
@@ -68,7 +66,6 @@ function Navbar() {
                   {loggedInUser?.charAt(0)?.toUpperCase()}
                 </div>
 
-                {/* Dropdown Menu */}
                 {showDropdown && (
                   <div className="absolute right-0 mt-2 bg-white border rounded shadow-md w-40">
                     <button
